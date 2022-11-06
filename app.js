@@ -1,6 +1,6 @@
 const TelegramBot = require('node-telegram-bot-api');
 const mongoose = require('mongoose');
-const { saveDataUser } = require('./dataShems')
+const { saveDataUser,addCoin,findCoin } = require('./dataShems')
 require('dotenv').config();
 token = process.env.TOKEN;
 dataBase = process.env.DATABASE
@@ -11,17 +11,21 @@ async function conn() {
     await mongoose.connect(dataBase)
 }
 
-bot.onText(/\/start/, async(msg) => {
-    let idUser = { 'id': await msg.from.id }
-    saveDataUser(idUser)
+
+bot.on('message',async (msg) => {
+    console.log(msg.text)
+    if(msg.text==="\/find"){   
+        let data =  await findCoin(await msg.from.id);
+    }
+        if(msg.text==="\/start"){
+            return saveDataUser({ 'id': await msg.from.id });
+        }
+
+        else{
+            return lightBuh(msg.text, msg.from.id);
+        }
+
 })
-bot.on('message', (msg) => {
-
-    lightBuh(msg.text, msg.from.id);
-
-})
-
-
 function lightBuh(someText, id) {
     let debet = credit = 0;
     let coins = (someText.match(/\+\d+/g) != null) ? someText.match(/\+\d+/g)[0] :
@@ -35,7 +39,7 @@ function lightBuh(someText, id) {
             'description': description,
             'date': new Date()
         }
-        //console.log(newOrder)
+        //addCoin(newOrder)
 }
 
 function answerBot(message, id) {
