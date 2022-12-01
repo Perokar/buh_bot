@@ -16,6 +16,7 @@ bot.on('message',async (msg) => {
     console.log(msg.text)
     if(msg.text==="\/find"){   
         let data =  await findCoin(await msg.from.id);
+        return false;
     }
         if(msg.text==="\/start"){
             return saveDataUser({ 'id': await msg.from.id });
