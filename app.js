@@ -14,21 +14,16 @@ async function conn() {
 
 bot.on('message', async(msg) => {
     console.log(msg.text)
-<<<<<<< HEAD
-    if(msg.text==="\/find"){   
-        let data =  await findCoin(await msg.from.id);
-        return false;
-=======
     if (msg.text === "\/find") {
         let data = await findCoin(await msg.from.id);
+        return false
     }
     if (msg.text === "\/start") {
         bot.sendMessage(msg.from.id, Hi)
         return saveDataUser({ 'id': await msg.from.id });
     } else {
-        +200
+
         return lightBuh(msg.text, msg.from.id);
->>>>>>> 1dac4ef72393b5fd997fa09c3a060bfa5f49592d
     }
 
 })
@@ -69,7 +64,7 @@ async function lightBuh(someText, id) {
         console.log((newOrder[debet] != 0 || newOrder[credit] > 0));
         console.log(newOrder)
     }
-    //addCoin(newOrder)
+    addCoin(newOrder)
 }
 
 function answerBot(message, id) {
